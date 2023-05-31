@@ -5,8 +5,6 @@ const urlBase = globalThis.process.env.APP_BASE_URL || '/'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  server: {
-    base: urlBase
-  },
+  base: urlBase,
   plugins: [react()],
 })
