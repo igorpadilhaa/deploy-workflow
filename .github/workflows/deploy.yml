@@ -1,8 +1,10 @@
 name: Deploy on Github Pages
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: [Run tests]
+    branches: [main]
+    types: [completed]
 
   workflow_dispatch:
 
@@ -18,6 +20,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
     - name: Checkout
@@ -31,10 +34,7 @@ jobs:
     
     - name: Install dependecies 
       run: npm ci
-
-    - name: Test project 
-      run: npm test
-
+      
     - name: Build artifact
       run: npm run build
       env:
