@@ -45,6 +45,11 @@ jobs:
       with:
         path: ./dist
 
+    - name: Use secret key
+      run: echo $SECRET_KEY
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
   deploy:
     environment:
       name: github-pages
